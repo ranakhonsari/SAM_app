@@ -1,0 +1,7 @@
+FROM python:3.10.10
+WORKDIR /usr/src/sam/backend/
+RUN pip install git+https://github.com/facebookresearch/segment-anything.git
+RUN pip install numpy torch torchvision torchaudio pillow
+COPY sam_vit_h_4b8939.pth /usr/src/sam/backend/
+COPY sam_backend.py /usr/src/sam/backend/
+

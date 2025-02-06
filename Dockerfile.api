@@ -1,0 +1,9 @@
+FROM python:3.10.10
+RUN pip install "fastapi[standard]"
+RUN pip install numpy pillow uvicorn torch torchvision torchaudio 
+RUN pip install git+https://github.com/facebookresearch/segment-anything.git
+COPY sam_vit_h_4b8939.pth .
+COPY main.py .
+COPY sam_backend.py .
+EXPOSE 8000
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
