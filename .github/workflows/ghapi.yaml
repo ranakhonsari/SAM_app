@@ -1,0 +1,32 @@
+name: ghapi
+on: pull_request
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  ghapi:
+    runs-on: ubuntu-latest
+    steps:        
+    - name: install dependencies
+      run: pip install ghapi 
+
+    - name: see payload # this step is for debugging purposes only, so you can see the payload. 
+      run: echo "PAYLOAD:\n${PAYLOAD}\n"
+      env:
+        PAYLOAD: ${{ toJSON(github.event) }}
+      
+    - name: Make a comment
+      shell: python
+      run: |
+        import os
+        from ghapi.core import GhApi
+        owner,repo = os.environ['REPO'].split('/')
+        api = GhApi(owner=owner, repo=repo)
+        api.issues.create_comment(os.environ['NUMBER'], "Hello There! Thanks for visiting my repo! May the force be with you!")
+      env:
+        NUMBER: ${{ github.event.number }} 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO: ${{ github.repository }}
