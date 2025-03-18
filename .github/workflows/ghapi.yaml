@@ -1,5 +1,9 @@
-name: ghapi
-on: pull_request
+name: greeting
+on:
+  issues:
+    types:
+      - opened
+
 
 permissions:
   contents: read
