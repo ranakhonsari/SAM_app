@@ -31,6 +31,6 @@ jobs:
         api = GhApi(owner=owner, repo=repo)
         api.issues.create_comment(os.environ['NUMBER'], "Hello There! Thanks for visiting my repo! May the force be with you!")
       env:
-        NUMBER: ${{ github.event.number }} 
+        NUMBER: ${{ github.event.issue.number }} 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         REPO: ${{ github.repository }}
